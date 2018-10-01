@@ -1,10 +1,13 @@
 from django.db import models
 from django.utils import timezone
+from autoslug import AutoSlugField
 
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
+    slug = AutoSlugField(populate_from='title', unique=True)
+    image = models.ImageField(upload_to='images', null=True, blank=True)
     text = models.TextField()
     created_date = models.DateTimeField(
             default=timezone.now)

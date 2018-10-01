@@ -1,19 +1,16 @@
-<html>
-<head>
-	<title>Blog Django Girls</title>
-</head>
-<body>
-	<div>
-		<h1><a href="/">Django Girls Blog</a></h1>
-	</div>
-
-	{% for post in posts %}
-	<div>
-		<p>publicado em: {{ post.published_date }}</p>
-		<h1><a href="">{{ post.title }}</a></h1>
-		<p>{{ post.text|linebreaksbr }}</p>
-	</div>
-	{% endfor %}
-</div>
-</body>
-</html>
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+            <h1><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title|title }}</a></h1>
+            {% if post.image %}
+            	<img src="{% get_media_prefix %}/{{ post.image }}">
+            {% endif %}
+            <p>{{ post.text|linebreaksbr|truncatewords:50 }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
