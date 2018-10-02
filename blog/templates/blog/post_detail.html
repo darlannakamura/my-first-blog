@@ -1,21 +1,63 @@
 {% extends 'blog/base.html' %}
 {% load static %}
+{% include 'blog/slider.html' %}
 {% block content %}
-    <div class="post">
-        {% if post.published_date %}
-            <div class="date">
-                {{ post.published_date }}
-            </div>
-        {% endif %}
+	<!-- PAGE HEADER -->
+		<div id="post-header" class="page-header">
+			{% if post.image %}
+				<div class="page-header-bg" style="background-image: url('{% get_media_prefix %}/{{ post.image }}');  background-position: 0% 0%;" data-stellar-background-ratio="0.5"></div>
+			{% else %}
+				<div class="page-header-bg" style="background-image: url('{% static 'img/header-1.jpg' %}');" data-stellar-background-ratio="0.5"></div>
+			{% endif %}
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10">
+						<h1>{{ post.title }}</h1> 
+						{% if user.is_authenticated %}
+						        <a class="btn btn-default" href="{% url 'post_edit' slug=post.slug %}"><i class="fa fa-pencil"></i></a>	
+        				{% endif %}
+						<ul class="post-meta">
+							<li><a href="author.html">{{ post.author }}</a></li>
+							<li>{{ post.published_date }}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /PAGE HEADER -->
 
-        {% if user.is_authenticated %}
-            <a class="btn btn-default" href="{% url 'post_edit' slug=post.slug %}"><span class="glyphicon glyphicon-pencil"></span></a>
-        {% endif %}
 
-        <h1>{{ post.title }}</h1>
-        {% if post.image %}
-            <img src="{% get_media_prefix %}/{{ post.image }}">
-        {% endif %}
-        <p>{{ post.text|linebreaksbr }}</p>
-    </div>
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- <div class="col-md-2"></div> -->
+				<div class="col-md-12">
+					
+					<!-- post content -->
+					<div class="section-row">
+						<p>{{ post.text|linebreaksbr }}</p>
+						<blockquote class="blockquote">
+							<p>{{ post.text|linebreaksbr|truncatewords:50 }}</p>
+							<footer class="blockquote-footer">{{ post.author }}</footer>
+						</blockquote>
+						
+					</div>
+					<!-- /post content -->
+
+
+		
+
+				</div>
+				<!-- <div class="col-md-2">
+				
+				</div> -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
 {% endblock %}

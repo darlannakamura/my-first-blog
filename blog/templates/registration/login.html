@@ -1,13 +1,42 @@
 {% extends 'blog/base.html' %}
 {% block content %}
 <div class="post">
-	<h1>Login</h1>
-	<form method="POST" class="post-form">
-		{% csrf_token %}
+  <h1 align="center">Login</h1>
+
+  <div class="container">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+            {% if form.errors %}
+                {% for error_field, error_message in form.errors.items %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        {{ error_message|striptags }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+      </div>
+      <div class="col-md-4"></div>
+  </div>
+
+  <form method="POST" class="post-form">
+     {% csrf_token %}
         <!-- <input type="text" name="login" placeholder="Digite seu login">
-        <input type="password" name="password" placeholder="Digite sua senha"> -->
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+        	<input type="password" name="password" placeholder="Digite sua senha"> -->
+
+            
+            <div class="container">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label for="id_username">Usuário:</label>
+                    <input type="text" name="username" class="form-control" autofocus maxlength="254" required id="id_username" />
+                    <label for="id_password">Senha:</label>
+                    <input type="password" name="password" class="form-control" required id="id_password" />
+                    <br>
+                    <button type="submit" class="save btn btn-success form-control">Entrar</button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -1,16 +1,42 @@
 {% extends 'blog/base.html' %}
 {% load static %}
+{% include 'blog/slider.html' %}
 {% block content %}
-    {% for post in posts %}
-        <div class="post">
-            <div class="date">
-                {{ post.published_date }}
-            </div>
-            <h1><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title|title }}</a></h1>
-            {% if post.image %}
-            	<img src="{% get_media_prefix %}/{{ post.image }}">
-            {% endif %}
-            <p>{{ post.text|linebreaksbr|truncatewords:50 }}</p>
-        </div>
-    {% endfor %}
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					{% for post in posts%}
+
+					<!-- post -->
+					<div class="post post-row">
+						<a class="post-img" href="{% url 'post_detail' slug=post.slug %}">
+							{% if post.image %}
+							<img src="{% get_media_prefix %}/{{ post.image }}" alt="">
+							{% else %}
+							<img src="{% static 'img/header-1.jpg' %}" alt="">
+							{% endif %}
+						</a>
+						<div class="post-body">
+							
+							<h3 class="post-title"><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title|title }}</a></h3>
+							<ul class="post-meta">
+								<li><a href="">{{ post.author }}</a></li>
+								<li>{{ post.published_date }}</li>
+							</ul>
+							<p style="text-align: justify;">{{ post.text|linebreaksbr|truncatewords:50 }}</p>
+						</div>
+					</div>
+					<!-- /post -->
+					{% endfor %}
+
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
