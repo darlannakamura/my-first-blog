@@ -2,3 +2,4 @@ Django~=2.0.8
 django-autoslug==1.9.3
 django-autoslug-iplweb==1.9.4
 djangorestframework==3.8.2
+Pillow==5.2.0
